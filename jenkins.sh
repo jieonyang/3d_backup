@@ -85,11 +85,17 @@ echo
 echo 'Jenkins is being installed. Please wait...'
 sleep 15s
 
+echo
+echo '>>>>>>>>>>>>>>>>> SAVE the below infomation separately! <<<<<<<<<<<<<<<<<<<'
 echo -n '>>> Jenkins URL : '
 kubectl get svc -n admin | awk '{print $4":8080"}' | grep aws
 echo
 echo '>>> Jenkins User : admin '
+echo
 echo -n '>>> Jenkins Password : ' &&  kubectl -n admin get secret jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 -d; echo
+echo
+echo '>>> Jenkins Secret Token : '
+kubectl describe secret $jenkins_token -n admin | grep token:
 echo
 
 
