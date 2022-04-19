@@ -95,9 +95,9 @@ echo
 echo -n '>>> Jenkins Password : ' &&  kubectl -n admin get secret jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 -d; echo
 echo
 echo '>>> Jenkins Secret Token : '
+jenkins_token=`kubectl -n admin get secret -o name | grep ^secret/jenkins-agent-token- | sed 's/secret\///g'`
 kubectl describe secret $jenkins_token -n admin | grep token:
 echo
-
 
 rm jenkins-agent-sa.yaml
 
